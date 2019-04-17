@@ -1,0 +1,4 @@
+[submodule "gameengine"]
+	path = gameengine
+	url = https://github.com/martinloesethjensen/gameengine.git
+	branch = engine-only-code-files
