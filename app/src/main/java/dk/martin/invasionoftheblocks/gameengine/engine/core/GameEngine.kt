@@ -26,6 +26,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
+
 abstract class GameEngine : Activity(), Runnable, TouchHandler, SensorEventListener {
     private var mainLoopThread: Thread? = null
     private var state = State.PAUSED
@@ -166,13 +167,11 @@ abstract class GameEngine : Activity(), Runnable, TouchHandler, SensorEventListe
         return font
     }
 
-    fun drawText(font: Typeface, text: String, x: Float, y: Float, color: Int, size: Float): Unit {
+    fun drawText(font: Typeface, text: String, x: Float, y: Float, color: Int, size: Float) {
         paint.typeface = font
         paint.textSize = size
         paint.color = color
         canvas?.drawText(text, x, y, paint)
-
-
     }
 
     override fun isTouchDown(pointer: Int): Boolean {
