@@ -1,6 +1,5 @@
 package dk.martin.invasionoftheblocks.invasionoftheblocks.world
 
-import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 import dk.martin.invasionoftheblocks.invasionoftheblocks.CollisionListener
 import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Bullet
@@ -27,7 +26,7 @@ class World(
     var points = 0
     var canon = Eye()
     var isShot = false
-    var shots = arrayListOf<Bullet>()
+    var bullets = arrayListOf<Bullet>()
     var maxShots = 4
 
     init {
@@ -38,20 +37,25 @@ class World(
         canon.acceleratorX = accelerometerX * deltaTime
         canon.rotate = canon.acceleratorX * 25
 
-        for (shot in shots) {
-            if (shot.y < 0 - Bullet.HEIGHT) {
-                shot.x = (160 + Bullet.WIDTH / 2).toFloat()
-                shot.y = 365
-                shot.speed = 5
-                Log.d("World", "Shot was recycled.")
+        for (bullet in bullets) {
+            if (bullet.y < 0 - Bullet.HEIGHT) {
+                bullet.x = (160 + Bullet.WIDTH / 2).toFloat()
+                bullet.y = Bullet.START_Y
+                bullet.speed = 5
+                //Log.d("World", "Shot was recycled.")
             }
-            shot.speed += (shot.speed * deltaTime).toInt()
-            shot.y -= (shot.speed * deltaTime * 25).toInt()
+            bullet.speed += (bullet.speed * deltaTime).toInt()
+            bullet.y -= (bullet.speed * deltaTime * 25).toInt()
+            if (-bullet.degrees > 0) {
+                bullet.x += (Math.sin(90 + (-bullet.degrees.toDouble())) * deltaTime + ((-bullet.degrees)) / 10).toFloat()
+            } else if (-bullet.degrees < 0) {
+                bullet.x += (Math.sin(90 - (-bullet.degrees.toDouble())) * deltaTime - ((bullet.degrees)) / 10).toFloat()
+            }
         }
     }
 
     fun addShotToList() {
-        if (isShot) shots.add(Bullet())
+        if (isShot) bullets.add(Bullet())
         isShot = false
     }
 
