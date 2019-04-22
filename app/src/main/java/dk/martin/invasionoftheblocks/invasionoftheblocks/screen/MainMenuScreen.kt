@@ -4,7 +4,7 @@ import dk.kea.androidgame.martin.myfirstgameengine.engine.core.Screen
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 
 class MainMenuScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
-    private var background = gameEngine.loadBitmap("invasionoftheblocks/startscreen.png")
+    private var background = gameEngine.loadBitmap("invasionoftheblocks/background.png")
     private var startGame = gameEngine.loadBitmap("invasionoftheblocks/resumeplay.png")
     private var passedTime = 0f
     private var startTime: Long = 0
@@ -23,7 +23,10 @@ class MainMenuScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
         passedTime += deltaTime
 
         if (passedTime - passedTime.toInt() > 0.5f) {
-            gameEngine.drawBitmap(startGame, (160 - startGame.width / 2).toFloat(), 300f)
+            gameEngine.drawBitmap(
+                startGame, (160 - startGame.width / 2).toFloat(),
+                (240 - startGame.height / 2).toFloat()
+            )
         }
     }
 
