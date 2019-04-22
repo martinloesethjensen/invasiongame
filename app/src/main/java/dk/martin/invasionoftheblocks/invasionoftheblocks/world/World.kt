@@ -1,9 +1,11 @@
 package dk.martin.invasionoftheblocks.invasionoftheblocks.world
 
+import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 import dk.martin.invasionoftheblocks.invasionoftheblocks.CollisionListener
 import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Canon
 import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Enemy
+import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Laser
 
 class World(
     var gameEngine: GameEngine,
@@ -24,6 +26,8 @@ class World(
     var gameOver = false
     var points = 0
     var canon = Canon()
+    var isShot = false
+    var laserShots = arrayListOf<Laser>()
 
     init {
 //        initEnemies()
@@ -32,6 +36,21 @@ class World(
     fun update(deltaTime: Float, accelerometerX: Float) {
         canon.acceleratorX = accelerometerX * deltaTime
         canon.rotate = canon.acceleratorX * 25
+
+        for (shot in laserShots) {
+            if (shot.y < 0 - Laser.HEIGHT) {
+                shot.x = 160 + Laser.WIDTH / 2
+                shot.y = 365
+                Log.d("World", "Shot was removed from list.")
+            }
+            shot.speed += (shot.speed * deltaTime).toInt()
+            shot.y -= (shot.speed * deltaTime * 25).toInt()
+        }
+    }
+
+    fun addShotToList() {
+        if (isShot) laserShots.add(Laser())
+        isShot = false
     }
 
     private fun initEnemies() {

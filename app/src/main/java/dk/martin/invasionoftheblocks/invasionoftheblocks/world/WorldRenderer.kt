@@ -6,25 +6,52 @@ import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 
 class WorldRenderer(var gameEngine: GameEngine, var world: World) {
+    // Bitmaps
     private var canonImage = gameEngine.loadBitmap("invasionoftheblocks/canon.png")
-    var enemyBlocks = gameEngine.loadBitmap("invasionoftheblocks/block1.png")
-    var matrix = Matrix()
-    private val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(
-        canonImage,
-        50, 71, true
-    )
+    private var laserImage = gameEngine.loadBitmap("invasionoftheblocks/laser.png")
+    private lateinit var heartImage: Bitmap
+    private lateinit var enemyBlockImage: Bitmap
 
+    // for rotation
+    private var matrix = Matrix()
+    private val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(canonImage, 50, 71, true)
+    var degrees = 0f // maybe no use?
 
     init {
         render()
     }
 
     fun render() {
-        Log.d("WorldRenderer", "Degrees: ${getDegreeFromMatrixValues()}")
+        drawRotatedCanon()
+        drawHeartImage()
+        //gameEngine.drawBitmap(laserImage, 50f, 50f)
 
-        val degrees = getDegreeFromMatrixValues()
+        Log.d("WorldRenderer", "Shots fired: ${world.laserShots.size}")
+        for (shot in world.laserShots) {
+            gameEngine.drawBitmap(laserImage, shot.x.toFloat(), shot.y.toFloat())
+        }
+    }
 
-        // boundaries
+    private fun drawHeartImage() {
+        if (world.lives != 0 || world.lives > 3) heartImage =
+            gameEngine.loadBitmap("invasionoftheblocks/heart${world.lives}.png")
+        gameEngine.drawBitmap(heartImage, (160 - heartImage.width / 2).toFloat(), 430f)
+    }
+
+    private fun drawRotatedCanon() {
+        //        Log.d("WorldRenderer", "Degrees: ${getDegreeFromMatrixValues()}")
+
+        degrees = getDegreeFromMatrixValues()
+
+        checkBoundaries(degrees)
+
+        val rotatedBitmap =
+            Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.width, scaledBitmap.height, matrix, true)
+
+        gameEngine.drawBitmap(rotatedBitmap, ((160) - canonImage.width / 2).toFloat(), 365f)
+    }
+
+    private fun checkBoundaries(degrees: Float) {
         if (degrees > -88 && degrees < 88) {
             matrix.postRotate(
                 -world.canon.rotate,
@@ -36,11 +63,6 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
         } else {
             matrix.postRotate((degrees - (degrees + 0.1)).toFloat())
         }
-
-        val rotatedBitmap =
-            Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.width, scaledBitmap.height, matrix, true)
-
-        gameEngine.drawBitmap(rotatedBitmap, ((160) - canonImage.width / 2).toFloat(), 365f)
     }
 
     private fun getDegreeFromMatrixValues(): Float {
