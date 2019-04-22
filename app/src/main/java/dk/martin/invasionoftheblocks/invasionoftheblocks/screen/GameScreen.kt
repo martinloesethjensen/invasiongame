@@ -1,6 +1,5 @@
 package dk.martin.invasionoftheblocks.invasionoftheblocks.screen
 
-import android.util.Log
 import dk.kea.androidgame.martin.myfirstgameengine.engine.core.Screen
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 import dk.martin.invasionoftheblocks.invasionoftheblocks.CollisionListener
@@ -53,7 +52,7 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
 //        }
 
         if (state === State.RUNNING) {
-            Log.d("GameScreen", "Start time: ${passedTime - tempTime}")
+            //Log.d("GameScreen", "Start time: ${passedTime - tempTime}")
             passedTime += deltaTime
 
             if (passedTime - tempTime > 1.5f && world.laserShots.size < world.maxLaserShots) {

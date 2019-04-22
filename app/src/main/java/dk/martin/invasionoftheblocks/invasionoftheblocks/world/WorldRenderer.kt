@@ -2,7 +2,9 @@ package dk.martin.invasionoftheblocks.invasionoftheblocks.world
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
+import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Laser
 
 class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     // Bitmaps
@@ -29,7 +31,24 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     private fun drawLaserShots() {
         // Log.d("WorldRenderer", "Shots fired: ${world.laserShots.size}")
         for (shot in world.laserShots) {
-            gameEngine.drawBitmap(laserImage, shot.x.toFloat(), shot.y.toFloat())
+            Log.d("Shot", "Shot y axis: ${shot.y}")
+            if (shot.y >= 355) shot.degrees = degrees
+            val tempMatrix = Matrix()
+            tempMatrix.postRotate(-shot.degrees)
+            val scaledLaserBitmap: Bitmap = Bitmap.createScaledBitmap(laserImage, Laser.WIDTH, Laser.HEIGHT, true)
+            val rotatedLaserBitmap =
+                Bitmap.createBitmap(
+                    scaledLaserBitmap,
+                    0,
+                    0,
+                    scaledLaserBitmap.width,
+                    scaledLaserBitmap.height,
+                    tempMatrix,
+                    true
+                )
+
+
+            gameEngine.drawBitmap(rotatedLaserBitmap, shot.x.toFloat(), shot.y.toFloat())
         }
     }
 
@@ -70,7 +89,7 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
         val values = FloatArray(9)
         matrix.getValues(values)
 
-        // calculate the degree of rotation and return the degree
+        // calculate the degrees of rotation and return the degrees
         return Math.round(
             Math.atan2(
                 values[Matrix.MSKEW_X].toDouble(),
