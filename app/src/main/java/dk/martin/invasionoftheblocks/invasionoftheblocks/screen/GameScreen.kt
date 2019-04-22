@@ -55,7 +55,7 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
             //Log.d("GameScreen", "Start time: ${passedTime - tempTime}")
             passedTime += deltaTime
 
-            if (passedTime - tempTime > 1.5f && world.laserShots.size < world.maxLaserShots) {
+            if (passedTime - tempTime > 1.5f && world.shots.size < world.maxShots) {
                 tempTime += 1.5f
                 passedTime -= deltaTime
                 world.isShot = true

@@ -3,9 +3,9 @@ package dk.martin.invasionoftheblocks.invasionoftheblocks.world
 import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 import dk.martin.invasionoftheblocks.invasionoftheblocks.CollisionListener
-import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Canon
+import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Bullet
 import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Enemy
-import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Laser
+import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Eye
 
 class World(
     var gameEngine: GameEngine,
@@ -25,10 +25,10 @@ class World(
     var maxEnemies = 10
     var gameOver = false
     var points = 0
-    var canon = Canon()
+    var canon = Eye()
     var isShot = false
-    var laserShots = arrayListOf<Laser>()
-    var maxLaserShots = 4
+    var shots = arrayListOf<Bullet>()
+    var maxShots = 4
 
     init {
 //        initEnemies()
@@ -38,9 +38,9 @@ class World(
         canon.acceleratorX = accelerometerX * deltaTime
         canon.rotate = canon.acceleratorX * 25
 
-        for (shot in laserShots) {
-            if (shot.y < 0 - Laser.HEIGHT) {
-                shot.x = 160 + Laser.WIDTH / 2
+        for (shot in shots) {
+            if (shot.y < 0 - Bullet.HEIGHT) {
+                shot.x = (160 + Bullet.WIDTH / 2).toFloat()
                 shot.y = 365
                 shot.speed = 5
                 Log.d("World", "Shot was recycled.")
@@ -51,7 +51,7 @@ class World(
     }
 
     fun addShotToList() {
-        if (isShot) laserShots.add(Laser())
+        if (isShot) shots.add(Bullet())
         isShot = false
     }
 

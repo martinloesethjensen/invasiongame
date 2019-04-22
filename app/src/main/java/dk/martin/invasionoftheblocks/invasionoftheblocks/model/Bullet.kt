@@ -1,12 +1,12 @@
 package dk.martin.invasionoftheblocks.invasionoftheblocks.model
 
-class Laser {
+class Bullet {
     companion object {
-        const val WIDTH = 10
-        const val HEIGHT = 35
+        const val WIDTH = 9
+        const val HEIGHT = 9
     }
 
-    var x = 160 + WIDTH / 2
+    var x: Float = (160 + WIDTH / 2).toFloat()
     var y = 365
     var speed = 5
     var degrees = 0f
