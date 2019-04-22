@@ -28,6 +28,7 @@ class World(
     var canon = Canon()
     var isShot = false
     var laserShots = arrayListOf<Laser>()
+    var maxLaserShots = 4
 
     init {
 //        initEnemies()
@@ -41,7 +42,8 @@ class World(
             if (shot.y < 0 - Laser.HEIGHT) {
                 shot.x = 160 + Laser.WIDTH / 2
                 shot.y = 365
-                Log.d("World", "Shot was removed from list.")
+                shot.speed = 5
+                Log.d("World", "Shot was recycled.")
             }
             shot.speed += (shot.speed * deltaTime).toInt()
             shot.y -= (shot.speed * deltaTime * 25).toInt()

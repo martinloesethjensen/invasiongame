@@ -37,12 +37,11 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
     private var worldRenderer = WorldRenderer(gameEngine, world)
 
     private var passedTime = 0f
+    private var tempTime = 0f
     private var startTime: Long = 0
 
     init {
         startTime = System.nanoTime()
-        Log.d("GameScreen", "Start time: $startTime")
-        Log.d("GameScreen", "Start time: $passedTime")
     }
 
     override fun update(deltaTime: Float) {
@@ -50,20 +49,19 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
 //        if ((state === State.RUNNING
 //                    && gameEngine.getTouchY(0) > 420
 //                    && gameEngine.getTouchX(0) > (320 - 60))
-//            && !world.isShot
 //        ) {
-//
-//            world.isShot = true
-//            world.addShotToList()
-//            Log.d("GameScreen", "Shot the laser")
 //        }
 
         if (state === State.RUNNING) {
-            Log.d("GameScreen", "Start time: $passedTime")
+            Log.d("GameScreen", "Start time: ${passedTime - tempTime}")
             passedTime += deltaTime
-            if (passedTime - passedTime.toInt() > 0.5f && world.laserShots.size < 25) {
+
+            if (passedTime - tempTime > 1.5f && world.laserShots.size < world.maxLaserShots) {
+                tempTime += 1.5f
+                passedTime -= deltaTime
                 world.isShot = true
                 world.addShotToList()
+                startTime = System.nanoTime()
             }
 
             world.update(deltaTime = deltaTime, accelerometerX = gameEngine.accelerometer[0])

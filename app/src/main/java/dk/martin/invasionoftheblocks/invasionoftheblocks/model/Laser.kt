@@ -8,5 +8,5 @@ class Laser {
 
     var x = 160 + WIDTH / 2
     var y = 365
-    var speed = 10
+    var speed = 5
 }

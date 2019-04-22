@@ -2,7 +2,6 @@ package dk.martin.invasionoftheblocks.invasionoftheblocks.world
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.util.Log
 import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
 
 class WorldRenderer(var gameEngine: GameEngine, var world: World) {
@@ -24,9 +23,11 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     fun render() {
         drawRotatedCanon()
         drawHeartImage()
-        //gameEngine.drawBitmap(laserImage, 50f, 50f)
+        drawLaserShots()
+    }
 
-        Log.d("WorldRenderer", "Shots fired: ${world.laserShots.size}")
+    private fun drawLaserShots() {
+        // Log.d("WorldRenderer", "Shots fired: ${world.laserShots.size}")
         for (shot in world.laserShots) {
             gameEngine.drawBitmap(laserImage, shot.x.toFloat(), shot.y.toFloat())
         }
