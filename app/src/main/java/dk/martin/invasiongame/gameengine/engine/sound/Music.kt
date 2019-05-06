@@ -1,4 +1,4 @@
-package dk.kea.androidgame.martin.myfirstgameengine.engine.sound
+package dk.martin.invasiongame.gameengine.engine.sound
 
 import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer

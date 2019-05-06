@@ -1,4 +1,4 @@
-package dk.kea.androidgame.martin.myfirstgameengine.engine.touch
+package dk.martin.invasiongame.gameengine.engine.touch
 
 interface TouchHandler {
     fun isTouchDown(pointer: Int): Boolean

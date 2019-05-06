@@ -1,16 +1,20 @@
-package dk.martin.invasionoftheblocks.invasionoftheblocks.screen
+package dk.martin.invasiongame.invasiongame.screen
 
-import dk.kea.androidgame.martin.myfirstgameengine.engine.core.Screen
-import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
+import dk.martin.invasiongame.gameengine.engine.core.GameEngine
+import dk.martin.invasiongame.gameengine.engine.core.Screen
+import dk.martin.invasiongame.gameengine.engine.sound.Music
 
 class MainMenuScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
-    private var background = gameEngine.loadBitmap("invasionoftheblocks/background.png")
-    private var startGame = gameEngine.loadBitmap("invasionoftheblocks/resumeplay.png")
+    private var background = gameEngine.loadBitmap("invasiongame/background.png")
+    private var startGame = gameEngine.loadBitmap("invasiongame/resumeplay.png")
+    private val music: Music = gameEngine.loadMusic("engine/music.ogg")
     private var passedTime = 0f
     private var startTime: Long = 0
 
     init {
         startTime = System.nanoTime()
+        music.play()
+        music.isLooping = true
     }
 
     override fun update(deltaTime: Float) {
@@ -31,11 +35,14 @@ class MainMenuScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
     }
 
     override fun pause() {
+        music.pause()
     }
 
     override fun resume() {
+        music.play()
     }
 
     override fun dispose() {
+        music.dispose()
     }
 }

@@ -1,4 +1,4 @@
-package dk.martin.invasionoftheblocks.invasionoftheblocks.model
+package dk.martin.invasiongame.invasiongame.model
 
 class Bullet {
     companion object {
@@ -12,4 +12,5 @@ class Bullet {
     var y = START_Y
     var speed = 6
     var degrees = 0f
+    var shotExhausted = false
 }

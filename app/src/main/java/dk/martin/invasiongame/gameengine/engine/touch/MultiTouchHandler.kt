@@ -1,11 +1,12 @@
-package dk.kea.androidgame.martin.myfirstgameengine.engine.touch
+package dk.martin.invasiongame.gameengine.engine.touch
 
 import android.view.MotionEvent
 import android.view.View
 
 
 class MultiTouchHandler(view: View, private val touchEventBuffer: MutableList<TouchEvent> // buffer with touch events
-                        , private val touchEventPool: TouchEventPool) : TouchHandler, View.OnTouchListener {
+                        , private val touchEventPool: TouchEventPool
+) : TouchHandler, View.OnTouchListener {
     private val isTouched = BooleanArray(20) // store the first 20 touches
     private val touchX = IntArray(20)
     private val touchY = IntArray(20)

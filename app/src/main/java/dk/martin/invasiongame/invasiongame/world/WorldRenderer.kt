@@ -1,17 +1,17 @@
-package dk.martin.invasionoftheblocks.invasionoftheblocks.world
+package dk.martin.invasiongame.invasiongame.world
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
-import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Bullet
-import dk.martin.invasionoftheblocks.invasionoftheblocks.model.Eye
+import dk.martin.invasiongame.gameengine.engine.core.GameEngine
+import dk.martin.invasiongame.invasiongame.model.Bullet
+import dk.martin.invasiongame.invasiongame.model.Eye
 
 class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     // Bitmaps
-    private var eyeImage = gameEngine.loadBitmap("invasionoftheblocks/eye.png")
-    private var bulletImage = gameEngine.loadBitmap("invasionoftheblocks/bullet.png")
+    private var eyeImage = gameEngine.loadBitmap("invasiongame/eye.png")
+    private var bulletImage = gameEngine.loadBitmap("invasiongame/bullet.png")
     private lateinit var heartImage: Bitmap
-    private lateinit var enemyBlockImage: Bitmap
+    private lateinit var enemyImage: Bitmap
 
     // for rotation
     private var matrix = Matrix()
@@ -30,10 +30,18 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     fun render() {
         drawRotatedEye()
         drawHeartImage()
-        drawLaserShots()
+        drawBullets()
+        drawEnemies()
     }
 
-    private fun drawLaserShots() {
+    private fun drawEnemies() {
+        world.enemies.forEach {
+            enemyImage = gameEngine.loadBitmap("invasiongame/enemy${it.hit}.png")
+            gameEngine.drawBitmap(enemyImage, it.x.toFloat(), it.y)
+        }
+    }
+
+    private fun drawBullets() {
         for (shot in world.bullets) {
             if (shot.y >= 355) shot.degrees = degrees
             val tempMatrix = Matrix()
@@ -60,7 +68,7 @@ class WorldRenderer(var gameEngine: GameEngine, var world: World) {
 
     private fun drawHeartImage() {
         if (world.lives != 0 || world.lives > 3) heartImage =
-            gameEngine.loadBitmap("invasionoftheblocks/heart${world.lives}.png")
+            gameEngine.loadBitmap("invasiongame/heart${world.lives}.png")
         gameEngine.drawBitmap(heartImage, (160 - heartImage.width / 2).toFloat(), 430f)
     }
 

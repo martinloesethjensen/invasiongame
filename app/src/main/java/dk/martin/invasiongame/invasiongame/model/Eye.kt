@@ -1,4 +1,4 @@
-package dk.martin.invasionoftheblocks.invasionoftheblocks.model
+package dk.martin.invasiongame.invasiongame.model
 
 class Eye {
     companion object {
@@ -6,7 +6,7 @@ class Eye {
         const val HEIGHT = 45
     }
 
-    // used for rotation of the canon
+    // used for rotation
     var acceleratorX = 0f
     var rotate = 0f
 }

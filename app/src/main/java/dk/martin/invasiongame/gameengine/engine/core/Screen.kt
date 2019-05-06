@@ -1,6 +1,4 @@
-package dk.kea.androidgame.martin.myfirstgameengine.engine.core
-
-import dk.martin.invasionoftheblocks.gameengine.engine.core.GameEngine
+package dk.martin.invasiongame.gameengine.engine.core
 
 abstract class Screen protected constructor(protected open val gameEngine: GameEngine) {
 

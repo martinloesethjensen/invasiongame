@@ -1,4 +1,4 @@
-package dk.martin.invasionoftheblocks.gameengine.engine.core
+package dk.martin.invasiongame.gameengine.engine.core
 
 import android.app.Activity
 import android.content.Context
@@ -14,14 +14,12 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.Window
 import android.view.WindowManager
-import dk.kea.androidgame.martin.myfirstgameengine.engine.core.Screen
-import dk.kea.androidgame.martin.myfirstgameengine.engine.core.State
-import dk.kea.androidgame.martin.myfirstgameengine.engine.sound.Music
-import dk.kea.androidgame.martin.myfirstgameengine.engine.sound.Sound
-import dk.kea.androidgame.martin.myfirstgameengine.engine.touch.MultiTouchHandler
-import dk.kea.androidgame.martin.myfirstgameengine.engine.touch.TouchEvent
-import dk.kea.androidgame.martin.myfirstgameengine.engine.touch.TouchEventPool
-import dk.kea.androidgame.martin.myfirstgameengine.engine.touch.TouchHandler
+import dk.martin.invasiongame.gameengine.engine.sound.Music
+import dk.martin.invasiongame.gameengine.engine.sound.Sound
+import dk.martin.invasiongame.gameengine.engine.touch.MultiTouchHandler
+import dk.martin.invasiongame.gameengine.engine.touch.TouchEvent
+import dk.martin.invasiongame.gameengine.engine.touch.TouchEventPool
+import dk.martin.invasiongame.gameengine.engine.touch.TouchHandler
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
