@@ -23,6 +23,14 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
     private var pause = gameEngine.loadBitmap("invasiongame/pause.png")
     private var gameOver = gameEngine.loadBitmap("invasiongame/gameover.png")
 
+    // Buttons
+    private var muteButton = gameEngine.loadBitmap("invasiongame/buttons/mute-button.png")
+    private var volumeOnButton = gameEngine.loadBitmap("invasiongame/buttons/volume-on-button.png")
+    private var pauseButton = gameEngine.loadBitmap("invasiongame/buttons/pause-button.png")
+    private var playButton = gameEngine.loadBitmap("invasiongame/buttons/play-button.png")
+    private var isMuted = false
+    private var isPaused = false
+
     private var state = State.RUNNING
 
     // Sounds variables below here
@@ -56,7 +64,10 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
 
         if (world.gameOver) state = State.GAME_OVER
 
-        //if (world.lostLife) pause()
+        if (state === State.PAUSED && gameEngine.isTouchDown(0)) { // if paused
+            state = State.RUNNING
+            resume()
+        }
 
         if (state === State.GAME_OVER && gameEngine.isTouchDown(0)) {
             drawFlashingGameOver()
@@ -72,12 +83,14 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
             }
         }
 
-//        if ((state === State.RUNNING
-//                    && gameEngine.getTouchY(0) > 420
-//                    && gameEngine.getTouchX(0) > (320 - 60))) {
-//            pause()
-//            return
-//        }
+        if ((state === State.RUNNING
+                    && gameEngine.getTouchY(0) > 440
+                    && gameEngine.getTouchX(0) > (320 - 40))
+        ) {
+            pause()
+            pauseOnTouch()
+            return
+        }
 
         if (state === State.RUNNING) {
 
@@ -104,8 +117,76 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
         showText = "Level: ${world.level}  Points: ${world.points}"
         gameEngine.drawText(font = font, text = showText, x = 5f, y = 460f, color = Color.RED, size = 8f)
 
+        checkIsPaused()
+        checkIsMuted()
+
+        if ((state === State.RUNNING
+                    && gameEngine.getTouchY(0) > 440
+                    && gameEngine.getTouchX(0) > (320 - 85)
+                    && gameEngine.getTouchX(0) < (320 - 45))
+        ) {
+            muteOnTouch()
+            return
+        }
+
         if (state === State.GAME_OVER) {
             drawFlashingGameOver()
+        }
+
+        if (state === State.PAUSED) {
+            pause()
+            gameEngine.drawBitmap(resume, (160 - resume.width / 2).toFloat(), (240 - resume.height / 2).toFloat())
+        }
+    }
+
+    private fun muteOnTouch() {
+        isMuted = !isMuted
+    }
+
+    private fun pauseOnTouch() {
+        pause()
+        state = State.PAUSED
+
+        isPaused = !isPaused // todo: fix mute and resume / pause state
+
+        gameEngine.drawBitmap(
+            resume, (World.MAX_X / 2 - resume.width / 2).toFloat(),
+            (World.MAX_Y / 2 - resume.height / 2).toFloat()
+        )
+    }
+
+    private fun checkIsMuted() {
+        when (isMuted) {
+            true -> {
+                gameEngine.drawBitmap(
+                    muteButton, (World.MAX_X - ((muteButton.width + 5) + (playButton.width + 5))).toFloat(),
+                    (World.MAX_Y - (muteButton.height + 5)).toFloat()
+                )
+                pause()
+            }
+            else -> {
+                gameEngine.drawBitmap(
+                    volumeOnButton, (World.MAX_X - ((volumeOnButton.width + 5) + (pauseButton.width + 5))).toFloat(),
+                    (World.MAX_Y - (volumeOnButton.height + 5)).toFloat()
+                )
+                resume()
+            }
+        }
+    }
+
+    private fun checkIsPaused() {
+        if (isPaused) {
+            gameEngine.drawBitmap(
+                playButton, (World.MAX_X - (playButton.width + 5)).toFloat(),
+                (World.MAX_Y - (playButton.height + 5)).toFloat()
+            )
+            pause()
+        } else {
+            gameEngine.drawBitmap(
+                pauseButton, (World.MAX_X - (pauseButton.width + 5)).toFloat(),
+                (World.MAX_Y - (pauseButton.height + 5)).toFloat()
+            )
+            resume()
         }
     }
 
@@ -119,13 +200,12 @@ class GameScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
     }
 
     override fun pause() {
-        if (state === State.RUNNING) state = State.PAUSED
+        //if (state === State.RUNNING) state = State.PAUSED
         music.pause()
-
     }
 
     override fun resume() {
-        if (state === State.PAUSED) state = State.RUNNING
+        //if (state === State.PAUSED) state = State.RUNNING
         music.play()
     }
 
