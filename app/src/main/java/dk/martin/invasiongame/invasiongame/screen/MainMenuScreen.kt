@@ -6,8 +6,8 @@ import dk.martin.invasiongame.gameengine.engine.sound.Music
 import dk.martin.invasiongame.invasiongame.world.World
 
 class MainMenuScreen(gameEngine: GameEngine) : Screen(gameEngine = gameEngine) {
-    private var background = gameEngine.loadBitmap("invasiongame/background.png")
-    private var startGame = gameEngine.loadBitmap("invasiongame/resumeplay.png")
+    private val background = gameEngine.loadBitmap("invasiongame/background.png")
+    private val startGame = gameEngine.loadBitmap("invasiongame/resumeplay.png")
     private val music: Music = gameEngine.loadMusic("engine/music.ogg")
     private var passedTime = 0f
     private var startTime: Long = 0

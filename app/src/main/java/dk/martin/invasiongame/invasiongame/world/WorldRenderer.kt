@@ -8,13 +8,13 @@ import dk.martin.invasiongame.invasiongame.model.Eye
 
 class WorldRenderer(var gameEngine: GameEngine, var world: World) {
     // Bitmaps
-    private var eyeImage = gameEngine.loadBitmap("invasiongame/eye.png")
-    private var bulletImage = gameEngine.loadBitmap("invasiongame/bullet.png")
+    private val eyeImage = gameEngine.loadBitmap("invasiongame/eye.png")
+    private val bulletImage = gameEngine.loadBitmap("invasiongame/bullet.png")
     private lateinit var heartImage: Bitmap
     private lateinit var enemyImage: Bitmap
 
     // for rotation
-    private var matrix = Matrix()
+    private val matrix = Matrix()
     private val scaledEyeBitmap: Bitmap = Bitmap.createScaledBitmap(
         eyeImage,
         Eye.WIDTH,

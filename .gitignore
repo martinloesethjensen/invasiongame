@@ -63,3 +63,11 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+.DS_Store
+.idea/modules.xml
+.idea/workspace (VALHALLA's conflicted copy 2019-04-23).xml
+app/.DS_Store
+app/libs/
+app/src/main/assets/.DS_Store
+# app/src/main/java/dk/martin/invasiongame/
